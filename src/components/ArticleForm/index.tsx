@@ -72,7 +72,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
             required
           />
           <Input
-            placeholder="Breve rewsumo do artigo"
+            placeholder="Breve resumo do artigo"
             type="textarea"
             name="resumo"
             label="Resumo"
@@ -82,7 +82,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
           />
 
           <Input
-            placeholder="Breve rewsumo do artigo"
+            placeholder="Breve resumo do artigo"
             type="file"
             name="image"
             label="Banner"

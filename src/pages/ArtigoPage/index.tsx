@@ -1,33 +1,32 @@
-import faker from "@faker-js/faker";
 import { useState, useEffect } from "react";
 import { ArticleView } from "../../components/ArticleView";
+import {useParams} from 'react-router-dom'
+import { ArticleThumbnailProps } from "../../components/ArticleThumbnail/ArticleThumbnail.types";
+import apiClient from "../../services/api-client";
 
 export const ArtigoPage = () => {
-  const [article, setArticle] = useState<string>('');
-  const [autor] = useState({
-    nome: faker.name.firstName(),
-    avatar: faker.image.avatar(),
-  });
-  const [dataPublicacao] = useState(new Date());
 
-  useEffect(() => {
-    async function loadArticle() {
-      // este article.md precisa ser adicionado, temporariamente ao nosso código. Podemos copiar este conteúdo dentro da nossa pasta /public.
-      // sugiro que você retire este documento de `src/stories/assets/markdown/article.md`
-      const response = await fetch('/article.md');
-      const article = await response.text();
-      setArticle(article);
-    }
-    
+  const [artigo, setArtigo] = useState<ArticleThumbnailProps>();
+  const {id} = useParams();
+
+  async function loadArticle() {
+    const response = await apiClient.get<ArticleThumbnailProps>(
+      `/artigos/${id}`,
+    );
+    console.log(response.data)
+    setArtigo(response.data);
+  }
+
+  useEffect(() => {   
     loadArticle();
-  }, []);
-
+  },[]);
+  
   return (
     <div className="m-10">
       <ArticleView
-        article={article}
-        autor={autor}
-        dataPublicacao={dataPublicacao}
+        article={""}
+        autor={{nome:"",id:43,avatar:""}}
+        dataPublicacao={new Date()}
         tempoLeitura={ '10min' }
       />
     </div>

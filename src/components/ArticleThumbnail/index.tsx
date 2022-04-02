@@ -1,7 +1,9 @@
 import React from "react";
 import {useState,useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import { formataData } from "../../helpers/date";
 import { ArticleThumbnailProps } from "./ArticleThumbnail.types";
+
 
 export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
   imagem,
@@ -10,24 +12,30 @@ export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
   dataPublicacao,
   tempoLeitura = '7 min',
   autor,
+  id,
 }) => {
 
-  const [editavel, setEditavel] = useState(false);
+  const [editavel, setEditavel] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // este Number(...) é necessário, pois o localStorage armazena strings. Nosso autor.id é
     // numérico.
    const usuarioAtual = Number(localStorage.getItem('usuarioId'));
    setEditavel(autor.id === usuarioAtual);
+   if(autor.id === usuarioAtual){
+     console.log('olá');
+   }
   }, [autor]);
 
   return (
-    <div className="w-10/12 flex flex-col mt-5">    
+    <div className="w-10/12 flex flex-col mt-5" onClick={()=>navigate(`/artigo/${id}`)} >    
       <header className="flex flex-row gap-3 items-center">
         <img
           src={ autor.avatar }
           className="rounded-full"
           style={{ width: '30px', height: '30px' }}
+          alt={ autor.nome }
         />
         <div>{ autor.nome }</div>
         <div className="text-sm text-gray-500">{ formataData(dataPublicacao) }</div>
@@ -42,7 +50,7 @@ export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
           </div>
         </div>
         <div className="flex items-center" style={{ maxHeight: '100px' }}>
-          <img className="mt-10" src={ imagem } />
+          <img className="mt-10" src={ imagem } alt='' />
         </div>
       </div>
       <footer className="flex flex-row pt-7 gap-3 items-center">

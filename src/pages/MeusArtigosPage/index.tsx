@@ -8,9 +8,7 @@ import apiClient from '../../services/api-client';
 export const MeusArtigosPage = () => {
   const [articles, setArticles] = useState<ArticleThumbnailProps[]>([]);
   
-
   async function buscaMeusArtigos() {
-    const token = localStorage.getItem("access_token");
     // através de generics, posso informar ao axios o tipo de objeto que vamos
     // operar.
     const response = await apiClient.get<ArticleThumbnailProps[]>(
