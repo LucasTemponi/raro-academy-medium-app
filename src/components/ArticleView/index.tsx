@@ -12,16 +12,17 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
   article,
   autor,
   dataPublicacao,
+  tempoLeitura
 }) => {
   const mdParser = new MarkdownIt();
   return (
     <>
       <header className="flex flex-row gap-3 items-center ml-20">
-        <img src={ autor.avatar } className="rounded-full" style={{ width: '50px', height: '50px' }} />
+        <img src={ autor.avatar } alt={autor.avatar} className="rounded-full" style={{ width: '50px', height: '50px' }} />
         <div className="block">
           <div>{ autor.nome }</div>
           <div className="text-sm text-gray-500">
-            { formataData(dataPublicacao) } · {/* { tempoLeitura } */} 7min de leitura
+            { formataData(dataPublicacao) } · { tempoLeitura }
           </div>
         </div>
       </header>

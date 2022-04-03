@@ -17,7 +17,6 @@ export const Login = () => {
     event.preventDefault();
     setLoading(true);
     setErro("");
-    console.log(login,senha)
     try{
       const url = `/auth/login`;
       const response = await apiClient.post(

@@ -3,6 +3,7 @@ import { Input } from "../Input";
 import { RitchTextEditor } from "../RitchTextEditor";
 import {useState,useEffect} from 'react'
 import { ArticleThumbnailProps } from "../ArticleThumbnail/ArticleThumbnail.types";
+import {useNavigate} from 'react-router-dom'
 
 type ArticleFormProps = {
   article?: ArticleThumbnailProps;
@@ -18,15 +19,25 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
   const [resumo, setResumo] = useState("");
   const [imagem, setImagem] = useState("");
   const [conteudo, setConteudo] = useState("");
+  const[deletavel,setDeletavel] = useState(false)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
+    
+    const usuarioAtual = Number(localStorage.getItem('id'));
     if (article) {
-      setTitulo(article.titulo);
-      setResumo(article.resumo);
-      setImagem(article.imagem);
-      setConteudo(article.conteudo || '');
+      if (usuarioAtual === article.autor.id) {
+        setTitulo(article.titulo);
+        setResumo(article.resumo);
+        setImagem(article.imagem);
+        setConteudo(article.conteudo || '');
+        setDeletavel(true);
+      } else{
+        navigate('/')
+      }
     }
-  }, [article]);
+  }, [article,navigate]);
 
   // criamos um novo evento para este componente: sempre que o usuário 
   // fizer o submit do form, vamos enviar para o componente pai o artigo
@@ -72,7 +83,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
             required
           />
           <Input
-            placeholder="Breve rewsumo do artigo"
+            placeholder="Breve resumo do artigo"
             type="textarea"
             name="resumo"
             label="Resumo"
@@ -82,7 +93,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
           />
 
           <Input
-            placeholder="Breve rewsumo do artigo"
+            placeholder="Breve resumo do artigo"
             type="file"
             name="image"
             label="Banner"
@@ -96,7 +107,6 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
             value={ conteudo }
             onChange={ setConteudo }
           />
-
           <Button type="submit">Salvar</Button>
         </form>
       </div>
