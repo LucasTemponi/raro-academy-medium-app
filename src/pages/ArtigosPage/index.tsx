@@ -5,21 +5,23 @@ import apiClient from "../../services/api-client";
 
 export const ArtigosPage = () => { 
   const [articles, setArticles] = useState<ArticleThumbnailProps[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function buscaArtigos() {
-      // através de generics, posso informar ao axios o tipo de objeto que vamos
-      // operar.
-      const response = await apiClient.get<ArticleThumbnailProps[]>(
-        '/artigos'
-      );
-      setArticles(response.data);
-    }
-  
-    useEffect(() => {
-      buscaArtigos();
-    }, []);
+    // através de generics, posso informar ao axios o tipo de objeto que vamos
+    // operar.
+    const response = await apiClient.get<ArticleThumbnailProps[]>(
+      '/artigos'
+    );
+    setArticles(response.data);
+    setIsLoading(false);
+  }
+  useEffect(() => {      
+    buscaArtigos();
+  }, []);
 
   return (
+      isLoading ? <div></div> :
       <div className="my-30">
           <ArticleList articles={articles} />
       </div>

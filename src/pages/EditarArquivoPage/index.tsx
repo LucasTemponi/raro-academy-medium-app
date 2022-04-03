@@ -28,13 +28,13 @@ export const EditarArquivoPage = () => {
 
 async function handleSubmit(artigo: ArticleThumbnailProps){
     if (artigo.id) {
-      const response = await apiClient.patch(
+      await apiClient.patch(
         `/artigos/${artigo.id}`,
         {...artigo}
       );
       navigate('/artigos')
     } else {
-      const response = await apiClient.post(
+      await apiClient.post(
         '/artigos',
         {...artigo}
       );

@@ -21,15 +21,24 @@ export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
   useEffect(() => {
     // este Number(...) é necessário, pois o localStorage armazena strings. Nosso autor.id é
     // numérico.
-   const usuarioAtual = Number(localStorage.getItem('usuarioId'));
+   const usuarioAtual = Number(localStorage.getItem('id'));
    setEditavel(autor.id === usuarioAtual);
    if(autor.id === usuarioAtual){
-     console.log('olá');
    }
   }, [autor]);
 
+  function enterArticle(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    event.preventDefault();
+    navigate(`/artigo/${id}`);
+  }
+
+  function handleEdit(event: React.MouseEvent<HTMLButtonElement>) {
+    event.stopPropagation();
+    navigate(`/artigos/editar/${id}`);
+  }
+
   return (
-    <div className="w-10/12 flex flex-col mt-5" onClick={()=>navigate(`/artigo/${id}`)} >    
+    <div className="w-10/12 flex flex-col mt-5" onClick={enterArticle}>    
       <header className="flex flex-row gap-3 items-center">
         <img
           src={ autor.avatar }
@@ -45,12 +54,12 @@ export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
           <div className="font-bold text-lg pt-3">
             { titulo }
           </div>
-          <div className="font-light pt-2 text-base text-gray-600">
+          <div className="font-light pt-2 text-base text-gray-600" >
             { resumo }
           </div>
         </div>
         <div className="flex items-center" style={{ maxHeight: '100px' }}>
-          <img className="mt-10" src={ imagem } alt='' />
+          <img className="m-10 min-w-fit " style={{ maxHeight: '100%' }} src={ imagem } alt='' />
         </div>
       </div>
       <footer className="flex flex-row pt-7 gap-3 items-center">
@@ -67,9 +76,10 @@ export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
                 rounded-full py-1 px-2 text-xs
                 `
               }
+              onClick={handleEdit}
             >
               Editar
-            </button>
+            </button> 
           )
         }
       </footer>

@@ -6,8 +6,17 @@ import apiClient from "../../services/api-client";
 
 export const ArtigoPage = () => {
 
-  const [artigo, setArtigo] = useState<ArticleThumbnailProps>();
+  const [artigo, setArtigo] = useState<ArticleThumbnailProps>({
+    conteudo:'',
+    autor:{nome:'',id:0,avatar:''},
+    id:'',
+    titulo:'',
+    dataPublicacao:new Date(),
+    resumo:'',
+    imagem:''
+  });
   const {id} = useParams();
+  const [isLoading, setIsLoading] = useState(true);
 
   async function loadArticle() {
     const response = await apiClient.get<ArticleThumbnailProps>(
@@ -15,6 +24,7 @@ export const ArtigoPage = () => {
     );
     console.log(response.data)
     setArtigo(response.data);
+    setIsLoading(false);
   }
 
   useEffect(() => {   
@@ -22,11 +32,12 @@ export const ArtigoPage = () => {
   },[]);
   
   return (
+    isLoading ? <div></div> :
     <div className="m-10">
       <ArticleView
-        article={""}
-        autor={{nome:"",id:43,avatar:""}}
-        dataPublicacao={new Date()}
+        article={artigo.conteudo}
+        autor={artigo.autor}
+        dataPublicacao={new Date(artigo.dataPublicacao)}
         tempoLeitura={ '10min' }
       />
     </div>
