@@ -9,11 +9,13 @@ type ArticleFormProps = {
   article?: ArticleThumbnailProps;
   // adicionamos uma propriedade de onSubmit, a ser disparada quando o usuário enviar o form.
   onSubmit?: (article: ArticleThumbnailProps) => void;
+  onDelete?:(article: ArticleThumbnailProps) => void;
 }
 
 export const ArticleForm: React.FC<ArticleFormProps> = ({
   article,
-  onSubmit
+  onSubmit,
+  onDelete,
 }) => {
   const [titulo, setTitulo] = useState("");
   const [resumo, setResumo] = useState("");
@@ -55,6 +57,14 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
       onSubmit(articleToSubmit as ArticleThumbnailProps)
     }
   }
+
+  const handleDelete = () => {
+    if(article){
+      if (onDelete) {
+          onDelete(article)
+      }
+    }
+  }  
 
   const transformaImagemEmBase64 = (event: any) => {
     const file = event.target.files[0];
@@ -107,7 +117,17 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
             value={ conteudo }
             onChange={ setConteudo }
           />
-          <Button type="submit">Salvar</Button>
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <Button type="submit">Salvar</Button>
+            <Button type="button" primaryColor="gray"
+              onClick={()=>navigate('/')}>
+                Voltar
+            </Button>
+            <Button type="button" primaryColor="red"
+              onClick={handleDelete}>
+              Deletar
+            </Button>
+          </div>
         </form>
       </div>
     </div>

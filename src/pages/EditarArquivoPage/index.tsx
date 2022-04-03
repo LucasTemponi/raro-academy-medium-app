@@ -42,12 +42,22 @@ async function handleSubmit(artigo: ArticleThumbnailProps){
     }
   }
 
+async function handleDelete(artigo: ArticleThumbnailProps){
+  await apiClient.delete(
+    `/artigos/${artigo.id}`
+  );
+  navigate('/artigos')
+}
+
   return (
     <>
       <div className="items-center justify-center m-10">
         <ArticleForm
           article={artigo}
-          onSubmit={handleSubmit} />
+          onSubmit={handleSubmit}
+          onDelete={handleDelete}
+        />
+          
       </div>
     </>
   );
