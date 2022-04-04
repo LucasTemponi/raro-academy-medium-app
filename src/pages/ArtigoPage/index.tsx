@@ -19,12 +19,16 @@ export const ArtigoPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   async function loadArticle() {
-    const response = await apiClient.get<ArticleThumbnailProps>(
-      `/artigos/${id}`,
-    );
-    console.log(response.data)
-    setArtigo(response.data);
-    setIsLoading(false);
+    try{
+      const response = await apiClient.get<ArticleThumbnailProps>(
+        `/artigos/${id}`,
+      );
+      console.log(response.data)
+      setArtigo(response.data);
+      setIsLoading(false);
+    }catch (e){
+      alert("Erro ao carregar artigo. Tente novamente mais tarde.")
+    }
   }
 
   useEffect(() => {   
@@ -33,7 +37,7 @@ export const ArtigoPage = () => {
   
   return (
     isLoading ? <div></div> :
-    <div className="m-10">
+    <div className="my-10 mx-20">
       <ArticleView
         article={artigo.conteudo}
         autor={artigo.autor}

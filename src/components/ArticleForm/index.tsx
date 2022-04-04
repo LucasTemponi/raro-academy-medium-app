@@ -21,22 +21,19 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
   const [resumo, setResumo] = useState("");
   const [imagem, setImagem] = useState("");
   const [conteudo, setConteudo] = useState("");
-  const[deletavel,setDeletavel] = useState(false)
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     
     const usuarioAtual = Number(localStorage.getItem('id'));
-    if (article) {
+    if (article){
       if (usuarioAtual === article.autor.id) {
         setTitulo(article.titulo);
         setResumo(article.resumo);
         setImagem(article.imagem);
         setConteudo(article.conteudo || '');
-        setDeletavel(true);
       } else{
-        navigate('/')
+        navigate('/');
       }
     }
   }, [article,navigate]);
@@ -54,14 +51,15 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
         imagem,
         conteudo,
       };
-      onSubmit(articleToSubmit as ArticleThumbnailProps)
+      onSubmit(articleToSubmit as ArticleThumbnailProps);
     }
   }
 
   const handleDelete = () => {
     if(article){
-      if (onDelete) {
-          onDelete(article)
+      const usuarioAtual = Number(localStorage.getItem('id'));
+      if (onDelete && (article.autor.id === usuarioAtual)) {
+          onDelete(article);
       }
     }
   }  
@@ -101,7 +99,6 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
             onChange={(e) => setResumo(e.target.value)}
             required
           />
-
           <Input
             placeholder="Breve resumo do artigo"
             type="file"
@@ -110,7 +107,6 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
             onChange={transformaImagemEmBase64}
             required
           />
-
           <RitchTextEditor
             label="Conteúdo"
             name="conteudo"
@@ -118,15 +114,19 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
             onChange={ setConteudo }
           />
           <div className="flex flex-wrap -mx-3 mb-6">
-            <Button type="submit">Salvar</Button>
-            <Button type="button" primaryColor="gray"
-              onClick={()=>navigate('/')}>
+            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+              <Button type="submit">Salvar</Button>
+            </div>
+            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">  
+              <Button type="button" primaryColor="gray" onClick={()=>navigate('/')}>
                 Voltar
-            </Button>
-            <Button type="button" primaryColor="red"
-              onClick={handleDelete}>
-              Deletar
-            </Button>
+              </Button>
+            </div>
+            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+              <Button type="button" primaryColor="red" onClick={handleDelete}>
+                Deletar
+              </Button>
+            </div>
           </div>
         </form>
       </div>

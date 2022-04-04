@@ -38,18 +38,17 @@ export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
   }
 
   return (
-    <div className="w-10/12 flex flex-col mt-5" onClick={enterArticle}>    
+    <div className="w-2/3 flex flex-col mt-5" onClick={enterArticle}>    
       <header className="flex flex-row gap-3 items-center">
         <img
           src={ autor.avatar }
-          className="rounded-full"
-          style={{ width: '30px', height: '30px' }}
+          className="rounded-full w-8 h-8 rounded-full"
           alt={ autor.nome }
         />
         <div>{ autor.nome }</div>
         <div className="text-sm text-gray-500">{ formataData(dataPublicacao) }</div>
       </header>
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-4 gap-3 cursor-pointer">
         <div className="col-span-3 flex flex-col">
           <div className="font-bold text-lg pt-3">
             { titulo }
@@ -58,8 +57,8 @@ export const ArticleThumbnail: React.FC<ArticleThumbnailProps> = ({
             { resumo }
           </div>
         </div>
-        <div className="flex items-center" style={{ maxHeight: '100px' }}>
-          <img className="m-10 min-w-fit " style={{ maxHeight: '100%' }} src={ imagem } alt='' />
+        <div className="flex items-center h-[100px]">
+          <img className="m-10 " src={ imagem } alt='' />
         </div>
       </div>
       <footer className="flex flex-row pt-7 gap-3 items-center">
