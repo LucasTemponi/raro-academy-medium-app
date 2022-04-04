@@ -36,14 +36,15 @@ export const ArtigoPage = () => {
   },[]);
   
   return (
-    isLoading ? <div></div> :
-    <div className="my-10 mx-20">
-      <ArticleView
-        article={artigo.conteudo}
-        autor={artigo.autor}
-        dataPublicacao={new Date(artigo.dataPublicacao)}
-        tempoLeitura={ '10min' }
-      />
-    </div>
+    isLoading ? <div></div>
+     :
+      <div className="my-10 mx-20">
+        <ArticleView
+          article={artigo.conteudo}
+          autor={artigo.autor}
+          dataPublicacao={new Date(artigo.dataPublicacao)}
+          tempoLeitura={ '10min' }
+        />
+      </div>
   );
 };
