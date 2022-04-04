@@ -34,7 +34,7 @@ export const EditarArquivoPage = () => {
   async function handleSubmit(artigo: ArticleThumbnailProps){
     if (artigo.id) {
       try{          
-        await apiClient.patch(
+        const response = await apiClient.patch(
           `/artigos/${artigo.id}`,
           {...artigo}
         );
@@ -44,11 +44,11 @@ export const EditarArquivoPage = () => {
       }
     } else {
       try{
-        await apiClient.post(
+        const response = await apiClient.post(
           '/artigos',
           {...artigo}
         );
-        navigate(`/artigo/${artigo.id}`)
+        navigate(`/artigo/${response.data.id}`)
       }catch(e){
         alert("Erro ao salvar artigo. Tente novamente mais tarde.")
       }
