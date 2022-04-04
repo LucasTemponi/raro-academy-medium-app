@@ -31,7 +31,7 @@ export const Navigation = () => {
       <ActivableLink to="/">Home</ActivableLink>
       <ActivableLink to="/artigos">Meus Artigos</ActivableLink>
       <ActivableLink to="/artigos/novo">Novo Artigo</ActivableLink>
-      <ActivableLink to="/" onClick={logout}>Logout</ActivableLink>
+      <ActivableLink to='' onClick={logout}>Logout</ActivableLink>
     </>
   );
 };

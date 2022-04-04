@@ -20,34 +20,51 @@ export const EditarArquivoPage = () => {
   }, [id]);
 
   async function buscarArtigo() {
-    const response = await apiClient.get<ArticleThumbnailProps>(
-      `/artigos/${id}`
-    );
-    setArtigo(response.data);
-  }
-
-async function handleSubmit(artigo: ArticleThumbnailProps){
-    if (artigo.id) {
-      await apiClient.patch(
-        `/artigos/${artigo.id}`,
-        {...artigo}
+    try{        
+      const response = await apiClient.get<ArticleThumbnailProps>(
+        `/artigos/${id}`
       );
-      navigate('/artigos')
-    } else {
-      await apiClient.post(
-        '/artigos',
-        {...artigo}
-      );
-      navigate('/artigos')
+      setArtigo(response.data);
+    }
+    catch(error){
+      alert("Erro ao buscar artigo. Tente novamente mais tarde.")
     }
   }
 
-async function handleDelete(artigo: ArticleThumbnailProps){
-  await apiClient.delete(
-    `/artigos/${artigo.id}`
-  );
-  navigate('/artigos')
-}
+  async function handleSubmit(artigo: ArticleThumbnailProps){
+    if (artigo.id) {
+      try{          
+        await apiClient.patch(
+          `/artigos/${artigo.id}`,
+          {...artigo}
+        );
+        navigate(`/artigo/${artigo.id}`)
+      }catch(e){
+        alert("Erro ao salvar artigo. Tente novamente mais tarde.")
+      }
+    } else {
+      try{
+        await apiClient.post(
+          '/artigos',
+          {...artigo}
+        );
+        navigate(`/artigo/${artigo.id}`)
+      }catch(e){
+        alert("Erro ao salvar artigo. Tente novamente mais tarde.")
+      }
+    }
+  }
+
+  async function handleDelete(artigo: ArticleThumbnailProps){
+    try{
+      await apiClient.delete(
+        `/artigos/${artigo.id}`
+      );
+      navigate('/artigos')
+    }catch(e){
+      alert("Erro ao deletar artigo. Tente novamente mais tarde.")
+    }
+  }
 
   return (
     <>
@@ -56,8 +73,7 @@ async function handleDelete(artigo: ArticleThumbnailProps){
           article={artigo}
           onSubmit={handleSubmit}
           onDelete={handleDelete}
-        />
-          
+        />          
       </div>
     </>
   );

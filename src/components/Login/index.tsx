@@ -8,10 +8,9 @@ import apiClient from '../../services/api-client';
 export const Login = () => {
   const [login, setLogin] = useState("");
   const [senha, setSenha] = useState("");
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState("");
- 
+  const navigate = useNavigate(); 
 
   async function autenticaUsuario(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -37,8 +36,8 @@ export const Login = () => {
       } else {
         setErro('Erro ao autenticar usuário. Tente novamente mais tarde.');
       }
+      setLoading(false);
     }
-    setLoading(false);
   }  
   
   return (
@@ -54,17 +53,16 @@ export const Login = () => {
         <form className="mt-8 space-y-6" onSubmit={autenticaUsuario}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div className="mt-5">
-            <Input
-              type="text"
-              name="login"
-              label="Login"
-              placeholder="login"
-              required
-              value={ login }
-              onChange={ (event) => setLogin(event.target.value) }
-            />
+              <Input
+                type="text"
+                name="login"
+                label="Login"
+                placeholder="login"
+                required
+                value={ login }
+                onChange={ (event) => setLogin(event.target.value) }
+              />
             </div>
-
             <div className="mt-5">
               <Input
                 type="password"
@@ -79,7 +77,6 @@ export const Login = () => {
           </div>
           <div>
             <Button
-            // disabled={loading}
             type="submit"
             >{loading ? 'Carregando...' : 'Entrar'}</Button>
           </div>

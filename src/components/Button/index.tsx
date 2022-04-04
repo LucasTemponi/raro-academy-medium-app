@@ -15,7 +15,6 @@ export const Button: React.FC<ButtonProps> = ({
   onClick,
 }) => {
   return (
-    <div className="w-full w-full md:w-1/3 px-3">
       <button
         type={ type }
         className={`
@@ -27,6 +26,5 @@ export const Button: React.FC<ButtonProps> = ({
       >
         { children }
       </button>
-    </div>
   );
 };

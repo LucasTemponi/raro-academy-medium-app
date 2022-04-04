@@ -10,12 +10,17 @@ export const ArtigosPage = () => {
   async function buscaArtigos() {
     // através de generics, posso informar ao axios o tipo de objeto que vamos
     // operar.
-    const response = await apiClient.get<ArticleThumbnailProps[]>(
-      '/artigos'
-    );
-    setArticles(response.data);
-    setIsLoading(false);
+    try{
+      const response = await apiClient.get<ArticleThumbnailProps[]>(
+        '/artigos'
+      );
+      setArticles(response.data);
+      setIsLoading(false);
+    }catch(e){
+      alert("Erro ao carregar artigos. Tente novamente mais tarde.")
+    }
   }
+
   useEffect(() => {      
     buscaArtigos();
   }, []);
